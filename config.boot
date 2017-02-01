@@ -1,3 +1,4 @@
+/* Config for our isolated Router2 */
 interfaces {
     ethernet eth0 {
         address 192.168.1.1/24
