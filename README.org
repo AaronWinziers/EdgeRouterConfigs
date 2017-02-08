@@ -17,7 +17,11 @@
 * Aufgabe 1
 ** Grundlegendes Konzept
 - Die Router sollen ein eigenes Subnetz aufbauen
+  - Die Router wurden entsprechend gelabelt von *R0-R3*
   - Die Subnetze werden in jedem Router jeweils über eth0 betrieben (/192.168.x.1/)
   - Ein DHCP-Service vergibt IP-Addressen auf eth0
   - Die Router kommunizieren über ein eigenes WAN /192.168.254.x/ mit statischen IP-Addressen
     - Static Routes werden verwendet, die Routingtables werden separat angegeben.
+  - Die Ethernetports 1-2 werden in die gleiche Bridgegroup /br0/
+    eingetragen, sodass die Subnetzte untereinander kommunizieren
+    können
