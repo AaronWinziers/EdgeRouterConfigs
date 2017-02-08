@@ -1,0 +1,23 @@
+#+TITLE: Dokumentation
+#+DATE: <2017-02-08 Mi>
+#+AUTHOR: Thomas Schimper
+#+EMAIL: thomasschimper94@gmail.com
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+OPTIONS: author:t c:nil creator:comment d:(not "LOGBOOK") date:t
+#+OPTIONS: e:t email:nil f:t inline:t num:t p:nil pri:nil stat:t
+#+OPTIONS: tags:t tasks:t tex:t timestamp:t toc:t todo:t |:t
+#+CREATOR: Emacs 25.1.1 (Org mode 8.2.10)
+#+DESCRIPTION:
+#+EXCLUDE_TAGS: noexport
+#+KEYWORDS:
+#+LANGUAGE: de
+#+SELECT_TAGS: export
+#+LATEX_HEADER: \usepackage[ngerman]{babel}
+
+* Aufgabe 1
+** Grundlegendes Konzept
+- Die Router sollen ein eigenes Subnetz aufbauen
+  - Die Subnetze werden in jedem Router jeweils über eth0 betrieben (/192.168.x.1/)
+  - Ein DHCP-Service vergibt IP-Addressen auf eth0
+  - Die Router kommunizieren über ein eigenes WAN /192.168.254.x/ mit statischen IP-Addressen
+    - Static Routes werden verwendet, die Routingtables werden separat angegeben.
