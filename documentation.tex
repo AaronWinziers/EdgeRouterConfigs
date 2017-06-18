@@ -94,32 +94,33 @@ und effektivere Zusammenarbeit.
 
 
 \section{Netzwerkanalyse}
-Um die realisierte Topologie zu auf Richtigkeit überprüfen, wurde nach
-der Konfiguration sowohl die Erreichbarkeit unter den einzelnen
-Geräten, als auch die Verbindungsrouten selbst mit Hilfe verschiedener
-Methoden getestet.
+Um die realisierte Topologie auf Korrektheit und Funktionalität zu
+überprüfen, wurde nach der Konfiguration des gesamten Netzwerkes,
+sowohl die Erreichbarkeit unter den einzelnen Geräten, als auch die
+Verbindungsrouten selbst mit Hilfe verschiedener Methoden getestet.
 \par
-Für die Erreichbarkeit zu bewerten, wurden zunächst Ping-Tests
-veranlasst, welche jeweils von einem Gerät an einem Spezifischem
-Router zu einem Gerät, welches an einem anderem Router angebunden
-war. Um zu verhindern, dass ein falsches Gerät versucht wird zu
-erreichen, haben wir uns zunächst die einzelnen IP-Adressen der
-jeweiligen Rechner mit dem Konsolen-Befehl \texttt{ifconfig} beschafft. Die
-Tests verliefen alle erfolgreich, was uns dazu führte, das Netzwerk
-weitergehend zu untersuchen.
+Um die Erreichbarkeit zu prüfen, haben wir versucht von einem Gerät
+aus ein weiteres Gerät, welches in einem anderen Subnetz registriert
+hatte, mittels des Unix-Tools \texttt{ping} zu erreichen. Um zu
+verhindern, dass ein falsches Gerät als Ziel angegeben wurde, haben
+wir uns zunächst die einzelnen IP-Adressen der jeweiligen Rechner mit
+dem Konsolen-Befehl \texttt{ifconfig} beschafft und diese mit den
+DHCP-Leases im entsprechenden Router überprüft. Die Tests verliefen
+alle erfolgreich, was uns dazu führte, das Netzwerk weitergehend zu
+untersuchen.
 \par 
 Bevor wir jedoch TCP oder UDP basierende Pakete über die internen
-Leitungen versendet haben, richteten wird zunächst einen
-bereitgestellten Rasberry-Pi ein, sodass dieser einen SSH-Server zur
-verfügung stellte, jener dazu benutzt wurde um SSH und sftp-Anfragen
-zu realisieren. Um weitergehende Informationen zu erhalten, wurde ein
-dritter Rechner (A1) am Mirror-Port des Switches mit den VLANs
-eingebunden, dieser mit Wireshark die Verbindungen und Übertragungen
-analysierte.
+Leitungen versendet haben, richteten wird zunächst einen uns zur
+Verfügung gestellten Rasberry Pi ein, sodass dieser einen
+OpenSSH-Server bereitstellte. Dieser wurde dazu benutzt um SSH und
+SFTP-Anfragen zu realisieren. Um weitergehende Informationen zu
+erhalten, wurde ein dritter Rechner (A1) am Mirror-Port des Switches
+mit den VLANs eingebunden, dieser mit Wireshark die Verbindungen und
+Übertragungen analysierte.
 \par
-Die Verbindung über Ping(ICMP), ssh oder auch sftp von R1 nach R3
+Die Verbindung über Ping (ICMP), ssh oder auch sftp von R1 nach R3
 verursachte bei A1 keinen angezeigten Datenverkehr, was zu erwarten
-war, dar die Router 0, 1 und 3 über Static Routes verbunden sind und
+war, da die Router 0, 1 und 3 über Static Routes verbunden sind und
 somit das Routing und der Datenaustausch über jene abgewickelt wurden.
 \par
 Alle anderen Verbindungen, welche über oder mit R2 hergestellt wurden
