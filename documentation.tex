@@ -161,6 +161,52 @@ SSH-Test ungefähr 2 zu 1, wohingegen beim SFTP-Test der Anteil an SSH
 Paketen wesentlich höher war.
 
 
-\section{Evaluation}
+\section{Evaluation \& Fazit}
+Der erste Teil des großen Praktikums erwies sich als günstiger
+Einstieg, um effizient den Umgang mit dem IPv4-Protokoll und
+allgemeinen Netzwerkarchitekturen zu erlernen. Wenn man zu beginnt
+vielleicht gedacht haben sollte, dass das Einrichten eines Netzwerkes
+bloß Plug-and-Play sei, mag dies vielleicht für einfache Netzwerke mit
+nur einem Router gelten. Betreibt man jedoch wie bei uns verlangt
+mehrere Router mit verschiedenen Subnetzen, so zeigt sich die
+Komplexität der Netzwerkkonfiguration. Um die Aufgabenstellung wie
+gefordert absolvieren zu können mussten wir zunächst lernen, wie wir
+die Router miteinander kommunizieren lassen konnten. Wir
+konfigurierten zunächst einen Router so, dass dieser über einen
+DHCP-Server automatisch IP-Adressen an Clients vergeben konnte. Als
+sich unsere Geräte eine IP-Adresse automatisch vom Router beziehen
+konnten, gingen wir dazu über zwei Router miteinander zu verbinden.
+Damit Geräte in den zwei verschiedenen Subnetzen der Router
+untereinander kommunizieren konnten und sich gegenseitig finden,
+bedarf es dem Gebrauch von statischen Routen, damit die Router
+wussten, wohin sie die Anfrage weiterleiten mussten.
+\par
+Mit dem neuerlangten Wissen begannen wir jetzt unser Projekt mit dem
+Verbinden des Routers 0, der nicht nur als Gateway ins Internet
+fungieren sollte, sondern auch eine Brücke zwischen Router 1 und 3
+bildete. Wichtig dabei war es zu erkennen, dass der Router 0 nach
+Abschluss der Konfiguration nicht mehr auf direktem Weg über den
+Ethernet-Port \texttt{eth0} erreicht werden konnte, da dieser dafür
+benutzt wurde, um eine Verbindung zum Internet herzustellen.  Nach
+ausreichender Konfiguration überbrückte der Router Anfragen auf
+\texttt{eth1} and \texttt{eth2} und andersherum. Über die gemeinsam
+genutzte Schnittstelle \texttt{eth0} konnte eine Verbindung mit dem
+Internet hergestellt werden.
+\par
+Als letzten Teil der Aufgabe kam der 8-Port-Switch von NetGEAR zum
+Einsatz. Dieser sollte die Ports eins und zwei zu einem VLAN
+hinzufügen und die Ports drei und vier in ein zweites. In dem ersten
+VLAN sollten die Router 2 und 3 kommunizieren und auf dem zweiten
+Router 1 und 2. Zusätzlich wurden alle Ports auf denen Traffic
+erfolgen könnte auf den Port 8 gespiegelt. Über diesen Port konnten
+wir mittels Wireshark Traffic analysieren und speichern, was wir auch
+im Teil der Netzwerkanalyse getan haben.
+\par
+Der ersten Teil des Projekts wies uns in die Grundlagen des
+IPv4-Protokoll ein und bereitete uns darauf vor, das vorgegebene
+Netzwerk auf das IPv6-Protokoll zu portieren. Wir eigneten uns nicht
+nur neue Fähigkeiten im Umgang mit Netzarchitekturen, sondern lernten
+auch den Umgang mit embedded Linuxsystemen und die Verwendung von Git.
+
 
 \end{document}
