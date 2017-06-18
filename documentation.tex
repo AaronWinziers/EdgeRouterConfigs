@@ -1,4 +1,4 @@
-\documentclass[10pt,a4paper]{article}
+\documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -8,8 +8,6 @@
 \usepackage[a4paper, portrait, margin=1.2in]{geometry}
 \author{AW, TS, CS, AD, RB}
 \title{Großes Studienprojekt}
-
-
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -91,8 +89,8 @@ und effektivere Zusammenarbeit.
 
 
 \section{Konfiguration}
-Router 0 dient als Schnittstelle zum Internet, deshalb ist er der
-einzige Router, der kein eigenes Sub-Netz aufspannt. Im Gegensatz zu
+R0 dient als Schnittstelle zum Internet, deshalb ist er der
+einzige Router, welcher kein eigenes Subnetz aufspannt. Im Gegensatz zu
 den anderen Routern konnte an eth1 und eth2 (die Verbindung zu R1 und
 R2) keine festen IP-Adressen vergeben werden. Stattdessen läuft ein
 DHCP-Server, der dem jeweiligen Anschluss eine passende IP-Adresse
@@ -101,16 +99,18 @@ des Routers mehr möglich wäre. Die drei anderen Router sind über eine
 IP-Adresse aus dem Adressraum ihres jeweiligen Subnetzes erreichbar
 (z.B. Router 3: 192.168.3.1) \par
 	
-Router 1-3 haben alle eine recht ähnliche Konfiguration: alle bieten
+R1-R3 haben alle eine recht ähnliche Konfiguration: alle bieten
 auf eth0 ein eigenes Subnetz. Über eth1 und eth2 sind sie mit den
 anderen Routern verbunden. Die Router sowie die Geräte in den
-Subnetzen können sich über statische Routen erreichen. \par
+Subnetzen können sich über statische Routen erreichen.
+\par
 	
 Die Firewall wurde entsprechend der Vorgabe in der Aufgabenstellung
 konfiguriert. Die Konfiguration erfolgte hauptsächlich über die in der
 Router-Software verfügbare Shell. Diese ist wesentlich mächtiger als
 das integrierte Webinterface, insbesondere bei seltener verwendeten
-Features des Routers. \par
+Features des Routers.
+\par
 	
 Das VLAN wurde durch die Konfiguration des entsprechenden Switches
 realisiert. Dies lässt sich mit der Konfigurationssoftware
@@ -144,22 +144,23 @@ Verfügung gestellten Rasberry Pi ein, sodass dieser einen
 OpenSSH-Server bereitstellte. Dieser wurde dazu benutzt um SSH und
 SFTP-Anfragen zu realisieren. Um weitergehende Informationen zu
 erhalten, wurde ein dritter Rechner (A1) am Mirror-Port des Switches
-mit den VLANs eingebunden, dieser mit Wireshark die Verbindungen und
-Übertragungen analysierte.
+mit den VLANs eingebunden, dieser mit dem Tool \texttt{Wireshark} die
+Verbindungen und Übertragungen analysierte.
 \par
-Die Verbindung über Ping (ICMP), ssh oder auch sftp von R1 nach R3
-verursachte bei A1 keinen angezeigten Datenverkehr, was zu erwarten
-war, da die Router 0, 1 und 3 über Static Routes verbunden sind und
-somit das Routing und der Datenaustausch über jene abgewickelt wurden.
-\par
+Die Verbindung über Ping (ICMP), \texttt{SSH} oder auch \texttt{SFTP}
+von R1 nach R3 verursachte bei A1 keinen angezeigten Datenverkehr, was
+zu erwarten war, da R0, R1 und R3 über Static Routes direkt
+kommunizieren können und keine Daten über den Switch versendet werden.
 Alle anderen Verbindungen, welche über oder mit R2 hergestellt wurden
-zeigten bei den jeweiligen Tests die zu erwartenden Protokolle an. Bei
-den Ping-Tests kam das ICMP-Protokoll zum tragen. Bei den SSH und SFTP
-Verbindungen wurde TCP und SSH verwendet, jedoch war die Gewichtung
-der einzelnen Pakete unterschiedlich. So war die Paketverteilung von
-SSH zu TCP beim SSH-Test ungefähr 2 zu 1, wohingegen beim SFTP-Test
-der Anteil an SSH Paketen wesentlich höher war.
+zeigten bei den jeweiligen Tests die zu erwartenden Protokolle und
+Daten an. Bei den Versuchen mit \texttt{ping} kam das ICMP-Protokoll
+zum tragen. Bei den SSH und SFTP Verbindungen wurde \texttt{TCP} und
+\texttt{SSH} verwendet, jedoch war die Gewichtung der einzelnen Pakete
+unterschiedlich. So war die Paketverteilung von SSH zu TCP beim
+SSH-Test ungefähr 2 zu 1, wohingegen beim SFTP-Test der Anteil an SSH
+Paketen wesentlich höher war.
 
 
-\section{Evaluation}Thomas
+\section{Evaluation}
+
 \end{document}
