@@ -24,7 +24,7 @@ Um sich mit dem Zusammenspiel von Geräten innerhalb eines
 Netzwerkes vertraut zu machen, war gefordert das folgende
 Diagramm als Netzwerk umzusetzen:
 \begin{figure}[ht]
-  % \includegraphics[width=\linewidth]{img/network_topography.png}
+  \includegraphics[width=\linewidth]{./network_topography.png}
   \centering
   \caption{Aufbau des Netzwerks}
 \end{figure}
@@ -137,6 +137,23 @@ dem Konsolen-Befehl \texttt{ifconfig} beschafft und diese mit den
 DHCP-Leases im entsprechenden Router überprüft. Die Tests verliefen
 alle erfolgreich, was uns dazu führte, das Netzwerk weitergehend zu
 untersuchen.
+\begin{figure}[ht]
+\begin{tabular}{|c|c|c|c|}
+\hline 
+Test & Ausgangsrechner & Zielrechner & Ergebnis \\ 
+\hline 
+Ping & hinter R2 & hinter R1 & erfolgreich \\ 
+\hline 
+Ping & hinter R2 & hinter R3 & erfolgreich \\ 
+\hline 
+SSH & hinter R2 & hinter R1 & erfolgreich \\ 
+\hline 
+SFTP & hinter R2 & hinter R1 & erfolgreich \\ 
+\hline 
+\end{tabular} 
+  \centering
+  \caption{Durchgeführte Tests}
+\end{figure}
 \par 
 Bevor wir jedoch TCP oder UDP basierende Pakete über die internen
 Leitungen versendet haben, richteten wird zunächst einen uns zur
