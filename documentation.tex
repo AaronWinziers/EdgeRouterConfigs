@@ -4,6 +4,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
+\usepackage{wrapfig}
 \usepackage[ngerman]{babel}
 \usepackage[a4paper, portrait, margin=1.2in]{geometry}
 \author{AW, TS, CS, AD, RB}
@@ -24,7 +25,7 @@ Um sich mit dem Zusammenspiel von Geräten innerhalb eines
 Netzwerkes vertraut zu machen, war gefordert das folgende
 Diagramm als Netzwerk umzusetzen:
 \begin{figure}[ht]
-  \includegraphics[width=\linewidth]{./network_topography.png}
+  \includegraphics[width=.8\linewidth]{./network_topography.png}
   \centering
   \caption{Aufbau des Netzwerks}
 \end{figure}
@@ -123,6 +124,11 @@ Traffic des Switches an Port 8 abgegriffen werden. \par
 
 
 \section{Netzwerkanalyse}
+\begin{wrapfigure}{R}{0.45\textwidth}
+\centering
+\includegraphics[width = 0.45\textwidth]{screenshot1.jpeg}
+\caption{\footnotesize{Ping-Test von Wireshark aufgenommen}}
+\end{wrapfigure}
 Um die realisierte Topologie auf Korrektheit und Funktionalität zu
 überprüfen, wurde nach der Konfiguration des gesamten Netzwerkes,
 sowohl die Erreichbarkeit unter den einzelnen Geräten, als auch die
@@ -155,6 +161,11 @@ SFTP & hinter R2 & hinter R1 & erfolgreich \\
   \caption{Durchgeführte Tests}
 \end{figure}
 \par 
+\begin{wrapfigure}{L}{0.45\textwidth}
+\centering
+\includegraphics[width = 0.45\textwidth]{screenshot2.jpeg}
+\caption{\footnotesize{SFTP-Test von Wireshark aufgenommen}}
+\end{wrapfigure}
 Bevor wir jedoch TCP oder UDP basierende Pakete über die internen
 Leitungen versendet haben, richteten wird zunächst einen uns zur
 Verfügung gestellten Rasberry Pi ein, sodass dieser einen
