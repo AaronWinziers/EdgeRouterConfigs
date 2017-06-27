@@ -8,7 +8,19 @@
 \usepackage{wrapfig}
 \usepackage[ngerman]{babel}
 \usepackage[a4paper, portrait, margin=1.2in]{geometry}
-\author{Aaron Winziers (1176638), Thomas Schimper (1184921), Christopher Schmitt (1192978), Amir Durguti (1172920), Rudolf Barth}
+\author{Aaron Winziers \\
+  (1176638)
+  \and
+  Thomas Schimper\\
+  (1184921)
+  \and
+  Christopher Schmitt\\
+  (1192978)
+  \and
+  Amir Durguti\\
+  (1172920)
+  \and
+  Rudolf Barth}
 \title{Großes Studienprojekt}
 \begin{document}
 \maketitle
@@ -127,7 +139,7 @@ Traffic des Switches an Port 8 abgegriffen werden. \par
 \section{Netzwerkanalyse}
 \begin{wrapfigure}{R}{0.45\textwidth}
 \centering
-\includegraphics[width = 0.45\textwidth]{screenshot1.jpeg}
+\includegraphics[width = 0.45\textwidth]{wireshark1.jpeg}
 \caption{\footnotesize{Ping-Test von Wireshark aufgenommen}}
 \end{wrapfigure}
 Um die realisierte Topologie auf Korrektheit und Funktionalität zu
@@ -164,8 +176,8 @@ SFTP & hinter R2 & hinter R1 & erfolgreich \\
 \par 
 \begin{wrapfigure}{L}{0.45\textwidth}
 \centering
-\includegraphics[width = 0.45\textwidth]{screenshot2.jpeg}
-\caption{\footnotesize{SFTP-Test von Wireshark aufgenommen}}
+\includegraphics[width = 0.45\textwidth]{wireshark2.jpeg}
+\caption{\footnotesize{SSH-Test von Wireshark aufgenommen}}
 \end{wrapfigure}
 Bevor wir jedoch TCP oder UDP basierende Pakete über die internen
 Leitungen versendet haben, richteten wird zunächst einen uns zur
@@ -175,16 +187,6 @@ SFTP-Anfragen zu realisieren. Um weitergehende Informationen zu
 erhalten, wurde ein dritter Rechner (A1) am Mirror-Port des Switches
 mit den VLANs eingebunden, dieser mit dem Tool \texttt{Wireshark} die
 pVerbindungen und Übertragungen analysierte.
-\begin{figure}[H]
-  \includegraphics[width=\linewidth]{./wireshark1.jpeg}
-  \centering
-  \caption{Analyse von Pings mittels \texttt{Wireshark}}
-\end{figure}
-\begin{figure}[H]
-  \includegraphics[width=\linewidth]{./wireshark2.jpeg}
-  \centering
-  \caption{Analyse von SSH-Verbindungen mittels \texttt{Wireshark}}
-\end{figure}
 \par
 Die Verbindung über Ping (ICMP), \texttt{SSH} oder auch \texttt{SFTP}
 von R1 nach R3 verursachte bei A1 keinen angezeigten Datenverkehr, was
