@@ -3,10 +3,11 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{float}
 \usepackage{graphicx}
 \usepackage[ngerman]{babel}
 \usepackage[a4paper, portrait, margin=1.2in]{geometry}
-\author{AW, TS, CS, AD, RB}
+\author{Aaron Winziers (1176638), Thomas Schimper (1184921), Christopher Schmitt (1192978), Amir Durguti (1172920), Rudolf Barth}
 \title{Großes Studienprojekt}
 \begin{document}
 \maketitle
@@ -162,7 +163,17 @@ OpenSSH-Server bereitstellte. Dieser wurde dazu benutzt um SSH und
 SFTP-Anfragen zu realisieren. Um weitergehende Informationen zu
 erhalten, wurde ein dritter Rechner (A1) am Mirror-Port des Switches
 mit den VLANs eingebunden, dieser mit dem Tool \texttt{Wireshark} die
-Verbindungen und Übertragungen analysierte.
+pVerbindungen und Übertragungen analysierte.
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{./wireshark1.jpeg}
+  \centering
+  \caption{Analyse von Pings mittels \texttt{Wireshark}}
+\end{figure}
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{./wireshark2.jpeg}
+  \centering
+  \caption{Analyse von SSH-Verbindungen mittels \texttt{Wireshark}}
+\end{figure}
 \par
 Die Verbindung über Ping (ICMP), \texttt{SSH} oder auch \texttt{SFTP}
 von R1 nach R3 verursachte bei A1 keinen angezeigten Datenverkehr, was
