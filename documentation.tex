@@ -5,7 +5,9 @@
 \usepackage{amssymb}
 \usepackage{float}
 \usepackage{graphicx}
+% \usepackage{microtype}
 \usepackage{wrapfig}
+\usepackage{listings}
 \usepackage[ngerman]{babel}
 \usepackage[a4paper, portrait, margin=1.2in]{geometry}
 \author{Aaron Winziers \\
@@ -20,7 +22,9 @@
   Amir Durguti\\
   (1172920)
   \and
-  Rudolf Barth}
+  Rudolf Barth\\
+(1100075)
+}
 \title{Großes Studienprojekt}
 \begin{document}
 \maketitle
@@ -101,6 +105,118 @@ herzustellen. Hierzu wurde Git auf dem berühmten Hostingplattform
 Github verwendet, dies erlaubte eine bessere Organisation des Projekts
 und effektivere Zusammenarbeit.
 
+\section{Hardware}
+
+Um die Fragestellung beantowrten zu können, haben wir folgende
+Hardware zur Verfügung gestellt bekommen.
+\begin{itemize}
+\item $4\times$ \texttt{EdgeRouter Lite}
+\item $4\times$ \texttt{Netgear ProSAFE Plus Switch GS108E}
+\item LAN-Kabel
+\end{itemize}
+Zunächst haben wir die Software auf den Routern analysiert. Diese
+verwenden als Basissystem EdgeOS, was im Grunde ein von Ubiquiti
+entworfenes Ubuntu-Derivat, welches sich bequem durch Verwendung von
+\texttt{apt} und \texttt{aptitude} verwalten lässt. Um jetzt auf das
+System zugreifen zu können haben wir uns über \texttt{SSH} auf dem
+Router angemeldet. Dazu mussten wir uns über das
+\texttt{eth0}-Interface mit dem Router verbinden. Um dies zu
+erreichen, haben wir uns eine statische IP im gleichen Netz, in dem
+sich auch der Router befindet, zugewiesen. Als Standardzugansdaten
+verwendet das System folgende Daten : 
+\begin{center}
+  \texttt{ubnt:ubnt} \\
+\end{center}
+Meldet man sich mit den folgenden Daten am Router per \texttt{SSH} an,
+so erkennt man schnell, das EdgeOS als Standardshell die
+\texttt{Vyatta Shell}\footnote[1]{https://github.com/vyos/vyatta-bash}
+verwendet, die auf der \text{GNU Bash} aufbaut. Diese hatte allerdings
+die normale Bash-Vervollständigung deaktiviert und wir verfügten nur
+über die zur Konfiguration vorgesehenen Befehle. Um dies zu beheben haben wir folgende Zeile in der \texttt{.basbrc} hinzugefügt.
+\lstset{
+  basicstyle=\footnotesize, frame=tb,
+  xleftmargin=.05\textwidth, xrightmargin=.05\textwidth
+}
+\begin{lstlisting}
+source /etc/bash_completion
+\end{lstlisting}
+
+Wollen wir jetzt den Router per CLI konfigurieren, so können wir über
+den Befehl \texttt{configure} die Konfigurationsumgebung
+betreten. Hier kann man jetzt die Einstellung interaktiv
+einstellen. Ist man mit dem Einstellen fertig, so kann man mit dem
+Befehl \texttt{commit \& save} permanent abspeichern. Wollen wir alle
+Daten auf einmal abändern so finden wir die Konfigurationsdatei an
+folgender Stelle im System: \texttt{/config/config.boot}. Die Umgebung
+kann man darauf mit \texttt{exit} wieder verlassen. Öffnet man die
+Datei mit \texttt{vim}, so kann man die Werte der Einstellungen direkt
+in der Datei eintragen, abspeichern und das System neustarten, um die
+Einstellungen zu übernehmen.
+
+\begin{lstlisting}[caption=config.boot von Router1]
+interfaces {
+    ethernet eth0 {
+        address 192.168.1.1/24
+        description LAN
+        duplex auto
+        speed auto
+    }
+    ethernet eth1 {
+        address 192.168.253.11/24
+        duplex auto
+        speed auto
+    }
+    ethernet eth2 {
+        address 192.168.252.12/24
+        duplex auto
+        speed auto
+    }
+    loopback lo {
+    }
+}
+\end{lstlisting}
+\newpage
+Wir haben um den Konfigurationsprozess zu beschleunigen, die
+Konfigurationsdatei mit der zweiten Variante direkt editiert, da wir
+diese auch später noch mit \texttt{Git} synchronisieren wollten.  Die
+Vorteile der direkten Konfiguration des Routers ergibt sich dadurch,
+da es deutlich schneller als das Webinterface, oder überhaupt eine
+\texttt{GUI} zu verwenden, ist und da \texttt{IPv6} nicht über das
+Webinterface konfigurierbar ist.
+
+Um im Folgenden Git zu verwenden muss man die offizielen Debian Quellen in der Datei 
+\texttt{/etc/apt/sources.list} eintragen. Dies geht aber auch bequem über die \texttt{configure}-Umgebung mit:
+
+\begin{lstlisting}[caption=Hinzufügen der Debian Quellen]
+  configure
+  set system package repository wheezy components 'main contrib non-free'
+  set system package repository wheezy distribution wheezy 
+  set system package repository wheezy url http://http.us.debian.org/debian
+  commit
+  save
+  exit
+\end{lstlisting}
+
+Jetzt kann man wie auch unter Debian und Ubuntu bekannt mit
+\texttt{sudo apt-get update} die Quellen synchronisieren und mit
+\texttt{sudo apt upgrade} aktualisieren. Wollen wir jetzt ein bestimmtes Paket installieren, so können wir per \texttt{apt-cache search} nach diesem suchen. 
+
+In unserem Fall wollen wir \texttt{Git} installieren. Wir installieren
+dieses mit \texttt{sudo apt-get install git} und bestätigen die
+Rückfrage mit Yes. Ist \texttt{Git} installiert, so können wir mit
+\text{git init} ein neues Repository erstellen. Parallel dazu haben
+wir auf Github ein privates Repository erstellt und alle
+Teammitglieder als Contributer eingeladen. Danach kann man per
+\texttt{git remote add origin} die URL zum Repository eintragen. Hat
+man so das locale Repository konfiguriert, fügt man neue Dateien mit
+\texttt{git add} neue Dateien versionieren.  Mit \texttt{git commit}
+können wir einen Commit erstellen und diesen mit \texttt{git push
+  origin master} in das Remote-Repository pushen. Wenn wir jetzt
+zusammenarbeiten wollen muss, sollte man nach dem Klonen des
+Repositories noch mit \texttt{git pull} das Repository
+aktualisieren. Werden unsere erstelleten Änderungen von \texttt{Git}
+mit einem Mergekonflikt zurückgewiesen, so müssen wir diesen noch
+vorher lokal lösen und danach die Lösung commiten.
 
 \section{Konfiguration}
 R0 dient als Schnittstelle zum Internet, deshalb ist er der
@@ -112,20 +228,20 @@ vergibt. Das ist notwendig, da sonst kein Zugriff auf das Webinterface
 des Routers mehr möglich wäre. Die drei anderen Router sind über eine
 IP-Adresse aus dem Adressraum ihres jeweiligen Subnetzes erreichbar
 (z.B. Router 3: 192.168.3.1) \par
-	
+
 R1-R3 haben alle eine recht ähnliche Konfiguration: alle bieten
 auf eth0 ein eigenes Subnetz. Über eth1 und eth2 sind sie mit den
 anderen Routern verbunden. Die Router sowie die Geräte in den
 Subnetzen können sich über statische Routen erreichen.
 \par
-	
+
 Die Firewall wurde entsprechend der Vorgabe in der Aufgabenstellung
 konfiguriert. Die Konfiguration erfolgte hauptsächlich über die in der
 Router-Software verfügbare Shell. Diese ist wesentlich mächtiger als
 das integrierte Webinterface, insbesondere bei seltener verwendeten
 Features des Routers.
 \par
-	
+
 Das VLAN wurde durch die Konfiguration des entsprechenden Switches
 realisiert. Dies lässt sich mit der Konfigurationssoftware
 bewerkstelligen, die allerdings nur für Windows vorliegt (alternativ
@@ -138,38 +254,38 @@ Traffic des Switches an Port 8 abgegriffen werden. \par
 
 \section{Netzwerkanalyse}
 \begin{wrapfigure}{R}{0.45\textwidth}
-\centering
-\includegraphics[width = 0.45\textwidth]{wireshark1.jpeg}
-\caption{\footnotesize{Ping-Test von Wireshark aufgenommen}}
-\end{wrapfigure}
-Um die realisierte Topologie auf Korrektheit und Funktionalität zu
-überprüfen, wurde nach der Konfiguration des gesamten Netzwerkes,
-sowohl die Erreichbarkeit unter den einzelnen Geräten, als auch die
-Verbindungsrouten selbst mit Hilfe verschiedener Methoden getestet.
-\par
-Um die Erreichbarkeit zu prüfen, haben wir versucht von einem Gerät
-aus ein weiteres Gerät, welches in einem anderen Subnetz registriert
-hatte, mittels des Unix-Tools \texttt{ping} zu erreichen. Um zu
-verhindern, dass ein falsches Gerät als Ziel angegeben wurde, haben
-wir uns zunächst die einzelnen IP-Adressen der jeweiligen Rechner mit
-dem Konsolen-Befehl \texttt{ifconfig} beschafft und diese mit den
-DHCP-Leases im entsprechenden Router überprüft. Die Tests verliefen
-alle erfolgreich, was uns dazu führte, das Netzwerk weitergehend zu
-untersuchen.
-\begin{figure}[ht]
-\begin{tabular}{|c|c|c|c|}
-\hline 
-Test & Ausgangsrechner & Zielrechner & Ergebnis \\ 
-\hline 
-Ping & hinter R2 & hinter R1 & erfolgreich \\ 
-\hline 
-Ping & hinter R2 & hinter R3 & erfolgreich \\ 
-\hline 
-SSH & hinter R2 & hinter R1 & erfolgreich \\ 
-\hline 
-SFTP & hinter R2 & hinter R1 & erfolgreich \\ 
-\hline 
-\end{tabular} 
+    \centering
+    \includegraphics[width = 0.45\textwidth]{wireshark1.jpeg}
+    \caption{\footnotesize{Ping-Test von Wireshark aufgenommen}}
+  \end{wrapfigure}
+  Um die realisierte Topologie auf Korrektheit und Funktionalität zu
+  überprüfen, wurde nach der Konfiguration des gesamten Netzwerkes,
+  sowohl die Erreichbarkeit unter den einzelnen Geräten, als auch die
+  Verbindungsrouten selbst mit Hilfe verschiedener Methoden getestet.
+  \par
+  Um die Erreichbarkeit zu prüfen, haben wir versucht von einem Gerät
+  aus ein weiteres Gerät, welches in einem anderen Subnetz registriert
+  hatte, mittels des Unix-Tools \texttt{ping} zu erreichen. Um zu
+  verhindern, dass ein falsches Gerät als Ziel angegeben wurde, haben
+  wir uns zunächst die einzelnen IP-Adressen der jeweiligen Rechner mit
+  dem Konsolen-Befehl \texttt{ifconfig} beschafft und diese mit den
+  DHCP-Leases im entsprechenden Router überprüft. Die Tests verliefen
+  alle erfolgreich, was uns dazu führte, das Netzwerk weitergehend zu
+  untersuchen.
+  \begin{figure}[ht]
+    \begin{tabular}{|c|c|c|c|}
+      \hline 
+      Test & Ausgangsrechner & Zielrechner & Ergebnis \\ 
+      \hline 
+      Ping & hinter R2 & hinter R1 & erfolgreich \\ 
+      \hline 
+      Ping & hinter R2 & hinter R3 & erfolgreich \\ 
+      \hline 
+      SSH & hinter R2 & hinter R1 & erfolgreich \\ 
+      \hline 
+      SFTP & hinter R2 & hinter R1 & erfolgreich \\ 
+      \hline 
+    \end{tabular} 
   \centering
   \caption{Durchgeführte Tests}
 \end{figure}
@@ -200,7 +316,6 @@ zum tragen. Bei den SSH und SFTP Verbindungen wurde \texttt{TCP} und
 unterschiedlich. So war die Paketverteilung von SSH zu TCP beim
 SSH-Test ungefähr 2 zu 1, wohingegen beim SFTP-Test der Anteil an SSH
 Paketen wesentlich höher war.
-
 
 \section{Evaluation \& Fazit}
 Der erste Teil des großen Praktikums erwies sich als günstiger
