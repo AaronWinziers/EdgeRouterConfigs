@@ -107,7 +107,7 @@ und effektivere Zusammenarbeit.
 
 \section{Hardware}
 
-Um die Fragestellung beantowrten zu können, haben wir folgende
+Um die Fragestellung beantworten zu können, haben wir folgende
 Hardware zur Verfügung gestellt bekommen.
 \begin{itemize}
 \item $4\times$ \texttt{EdgeRouter Lite}
@@ -363,6 +363,25 @@ IPv4-Protokoll ein und bereitete uns darauf vor, das vorgegebene
 Netzwerk auf das IPv6-Protokoll zu portieren. Wir eigneten uns nicht
 nur neue Fähigkeiten im Umgang mit Netzarchitekturen, sondern lernten
 auch den Umgang mit embedded Linuxsystemen und die Verwendung von Git.
+
+\section{Neue Aufgabenstellung}
+
+Setzen Sie folgende abgebildete Netztopologie um:\\
+\begin{figure}[ht]
+	\includegraphics[scale=0.63]{d1.png}
+	\centering
+	\caption{Aufbau des Netzwerks}
+\end{figure}
+\par
+Zuerst sollte Router 0 so konfiguriert werden, dass das Internet aus dem IPv6 Netzwerk N0 erreichbar ist. Dementsprechend sollte Router 0 eine Firewall implementieren die eingehende Pakete nur weiterleitet, wenn sie im Zusammenhang mit ausgehenden Paketen stehen. Als nächstes sollte Router 1 konfiguriert werden, sodass das Routing zwischen den Routern R0-R1 über statische IP Adressen funktioniert. Das Netzwerk N2 soll ein weiteres IPv6 Netzwerk sein somit muss Router 2 dementsprechend konfiguriert werden. Bei Netzwerk N3 handelt es sich um ein reines IPv4 Netzwerk, für das Konfigurationen aus Aufgabe 1 verwendet werden können. Zum Schluss sollte man aus allen Netzwerken N0, N2 und N3 das Internet und die jeweils anderen Netzwerke erreichen können. Zur Konfiguration der Router können Sie, wie zuvor in Aufgabe 1, die Web-GUI oder die CLI verwenden. Zum Überprüfen der Erreichbarkeit zwischen den Netzen N0, N2 und N3 reicht eine SSH-Verbindung oder ein einfaches Kommunikationsprogramm auf Basis von TCP.
+
+\par
+%TODO
+Überprüfen sie die Erreichbarkeit zwischen den Netzen N0, N1, N2. Schließen Sie dazu Notebooks an den entsprechenden Switches an, die z.B. Über SSH-Verbindungen oder mittels eines einfachen Kommunikationsprogramms (auf Basis von TCP) Daten austauschen. Tauschen Sie die notwendigen IP-Adressen untereinander aus; d.h. Es sollte auch ohne einen installierten DNS-Server funktionieren.
+
+\par
+
+Untersuchen und analysieren sie den Datenfluss über Router 1 mittels Wireshark um zu gewährleisten dass die Daten an die richtigen Router und Subnetzen weitergeleitet werden.
 
 
 \end{document}
